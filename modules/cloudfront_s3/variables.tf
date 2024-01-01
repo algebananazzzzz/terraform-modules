@@ -34,8 +34,8 @@ variable "cloudfront_aliases" {
 variable "cloudfront_viewer_certificate" {
   type = object({
     acm_certificate_arn      = string
-    minimum_protocol_version = string
-    ssl_support_method       = string
+    minimum_protocol_version = optional(string)
+    ssl_support_method       = optional(string)
   })
   default = null
 }
