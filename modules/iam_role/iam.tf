@@ -31,12 +31,17 @@ module "iam_policy" {
 resource "aws_iam_role" "role" {
   name                 = var.role_name
   description          = var.role_description
-  managed_policy_arns  = var.role_managed_policy_arns
   permissions_boundary = var.role_permissions_boundary
   max_session_duration = var.role_max_session_duration
   tags                 = var.role_tags
 
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "managed_policy" {
+  for_each   = toset(var.role_managed_policy_arns)
+  role       = aws_iam_role.role.name
+  policy_arn = each.value
 }
 
 resource "aws_iam_role_policy_attachment" "role-attachment" {
