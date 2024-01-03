@@ -1,6 +1,6 @@
 locals {
   lambda_managed_policy = var.compute_platform == "Lambda" ? "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda" : ""
-  ecs_managed_policy    = var.compute_platform == "ECS" ? "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForECS" : ""
+  ecs_managed_policy    = var.compute_platform == "ECS" ? "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS" : ""
   managed_policy_arn    = coalesce(local.lambda_managed_policy, local.ecs_managed_policy)
 }
 
