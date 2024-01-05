@@ -48,7 +48,8 @@ resource "aws_lambda_function" "lambda" {
 
   depends_on = [
     aws_s3_object.s3_deployment,
-    module.lambda_execution_role
+    module.lambda_execution_role,
+    aws_cloudwatch_log_group.logs
   ]
 }
 

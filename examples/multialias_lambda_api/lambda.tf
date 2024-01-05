@@ -88,7 +88,7 @@ module "lambda_function" {
   }
 
   vpc_config = {
-    subnet_ids         = [data.aws_subnets.private.ids]
+    subnet_ids         = data.aws_subnets.private.ids
     security_group_ids = [data.aws_security_group.allow_nat.id]
   }
 

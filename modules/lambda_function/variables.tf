@@ -108,3 +108,8 @@ variable "timeout" {
   type    = number
   default = 3
 }
+
+variable "logs_retention_in_days" {
+  type    = number
+  default = 30
+}
