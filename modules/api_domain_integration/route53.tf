@@ -9,5 +9,5 @@ resource "aws_route53_record" "record" {
     evaluate_target_health = false
   }
 
-  depends_on = [aws_api_gateway_domain_name.domain]
+  depends_on = [aws_apigatewayv2_domain_name.domain]
 }

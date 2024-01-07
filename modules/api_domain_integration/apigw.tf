@@ -9,9 +9,10 @@ resource "aws_apigatewayv2_domain_name" "domain" {
 }
 
 
-resource "aws_apigatewayv2_api_mapping" "example" {
+resource "aws_apigatewayv2_api_mapping" "mapping" {
   for_each    = var.api_mappings
   api_id      = each.value.api_id
   domain_name = aws_apigatewayv2_domain_name.domain.id
   stage       = each.value.stage_id
+  depends_on  = [aws_route53_record.record]
 }

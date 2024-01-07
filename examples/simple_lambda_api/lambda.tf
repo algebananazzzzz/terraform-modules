@@ -80,6 +80,13 @@ module "api_lambda_integration" {
   #   max_age           = 6400
   # }
 
+  stage_configuration = {
+    latest = {
+      api_gateway_stage_name        = "latest"
+      api_gateway_stage_description = "default stage"
+    }
+  }
+
   lambda_integrations = {
     latest = {
       function_name   = module.lambda_function.function_name
@@ -91,6 +98,20 @@ module "api_lambda_integration" {
       # request_parameters = {
       #   "overwrite:header.Content-Type" = "application/json"
       # }
+    }
+  }
+}
+
+
+module "api_domain_integration" {
+  source                   = "github.com/algebananazzzzz/terraform_modules/modules/api_domain_integration"
+  domain_name              = local.domain_name
+  regional_certificate_arn = local.regional_certificate_arn
+  route53_zone_id          = local.route53_zone_id
+  api_mappings = {
+    latest = {
+      api_id   = module.api_lambda_integration.api_gateway_id
+      stage_id = module.api_lambda_integration.stage_ids["latest"]
     }
   }
 }
