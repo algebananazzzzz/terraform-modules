@@ -9,6 +9,13 @@ variable "lambda_integrations" {
   }))
 }
 
+variable "stage_configuration" {
+  type = map(object({
+    api_gateway_stage_name        = string
+    api_gateway_stage_description = optional(string)
+  }))
+}
+
 variable "api_gateway_name" {
   type = string
 }

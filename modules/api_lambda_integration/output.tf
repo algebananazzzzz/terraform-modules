@@ -13,3 +13,10 @@ output "api_gateway_name" {
 output "api_endpoint" {
   value = aws_apigatewayv2_stage.stage.invoke_url
 }
+
+output "stage_ids" {
+  value = {
+    for key, value in aws_apigatewayv2_stage.stage :
+    key => value.id
+  }
+}
