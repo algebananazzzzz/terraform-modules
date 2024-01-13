@@ -6,6 +6,10 @@ output "dns_name" {
   value = aws_lb.load_balancer.dns_name
 }
 
+output "zone_id" {
+  value = aws_lb.load_balancer.zone_id
+}
+
 output "security_group_from_lb_id" {
   value = aws_security_group.allow_from_lb.id
 }
