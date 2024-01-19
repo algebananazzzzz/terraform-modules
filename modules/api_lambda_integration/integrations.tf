@@ -12,7 +12,7 @@ resource "aws_apigatewayv2_route" "api_integration" {
   for_each = var.lambda_integrations
   api_id   = aws_apigatewayv2_api.api_gateway.id
 
-  route_key = "ANY /${each.value.path}/{proxy+}"
+  route_key = "ANY /${each.value.path}"
   target    = "integrations/${aws_apigatewayv2_integration.api_integration[each.key].id}"
 }
 
