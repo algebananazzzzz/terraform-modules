@@ -7,12 +7,17 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
-      - name: Render terraform docs and push changes back to PR
-        uses: terraform-docs/gh-actions@main
+          ref: ${{ github.ref }}
+      - uses: actions/setup-go@v5
         with:
-          config-file: .terraform-docs.yml
-          git-push: "true"
+          go-version: "^1.21.0"
+      - run: go install github.com/terraform-docs/terraform-docs@v0.17.0
+      - run: $(go env GOPATH)/bin/terraform-docs markdown .
+      - name: Upload Documentation to Wiki
+        uses: SwiftDocOrg/github-wiki-publish-action@v1
+        with:
+          path: wiki/generated
+        env:
+          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
