@@ -1,0 +1,7 @@
+output:
+  file: "../../wiki/generated/alb.md"
+  mode: replace
+  template: |-
+    # Module: alb 
+
+    {{ .Content }}

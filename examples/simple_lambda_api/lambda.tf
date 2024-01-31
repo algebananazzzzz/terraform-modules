@@ -1,18 +1,12 @@
-# General Lambda + Apigw Configuration
 locals {
-  function_name                 = "${var.env}-app-func-simpleapi"
-  deployment_package_local_path = "./build"
+  function_name = "${var.env}-app-func-${var.project_code}"
   environment_variables = {
-    foo = "bar"
+    REDIS_ADDR = "globalrediscache.internal.globalvpc:6379"
+    REDIS_KEY  = "foo"
   }
-  api_gateway_name = "${var.env}-web-apigw-simpleapi"
-}
-
-# Execution role config
-locals {
-  execution_role_name = "${var.env}-app-role-simpleapi"
+  execution_role_name = "${var.env}-app-role-${var.project_code}"
   execution_role_policy_document = {
-    name = "${var.env}-app-policy-simpleapi"
+    name = "${var.env}-app-policy-${var.project_code}"
     statements = {
       allowCreateNetworkInterface = {
         effect = "Allow"
@@ -30,88 +24,46 @@ locals {
 }
 
 module "lambda_function" {
-  source        = "github.com/algebananazzzzz/terraform_modules/modules/lambda_function"
-  function_name = local.function_name
-  runtime       = "provided.al2"
-  handler       = "bootstrap"
-
-  # architectures                  = ["x86_64"]
-  # description                    = "A simple function description"
-  # environment_variables          = local.environment_variables
-  # ephemeral_storage_size         = 512
-  # layers                         = [""]
-  # memory_size                    = 128
-  # reserved_concurrent_executions = -1
-  # timeout                        = 3
-
-  execution_role_name            = local.execution_role_name
-  execution_role_policy_document = local.execution_role_policy_document
-
-  deployment_package = {
-    local_path = local.deployment_package_local_path
+  source              = "github.com/algebananazzzzz/terraform_modules/modules/lambda_function"
+  function_name       = "ExampleFunction"
+  runtime             = "nodejs18.x"
+  handler             = "index.js"
+  execution_role_name = "ExampleFunctionExecutionRole"
+  execution_role_policy_document = {
+    name = "ExampleFunctionCustomPolicy"
+    statements = {
+      allowCreateNetworkInterface = {
+        effect = "Allow"
+        actions = [
+          "ec2:CreateNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DeleteNetworkInterface",
+          "ec2:AssignPrivateIpAddresses",
+          "ec2:UnassignPrivateIpAddresses"
+        ]
+        resources = ["*"]
+      }
+    }
   }
-
+  environment_variables = {
+    foo = "bar"
+  }
   vpc_config = {
-    subnet_ids         = data.aws_subnets.private.ids
-    security_group_ids = [data.aws_security_group.allow_nat.id]
+    subnet_ids         = ["subnet-01234567890abcdef"]
+    security_group_ids = ["sg-01234567890abcdef"]
   }
-
-  tags = {
-    Env = var.env
+  deployment_package = {
+    local_path = "./build"
   }
-}
-
-
-module "api_lambda_integration" {
-  source           = "github.com/algebananazzzzz/terraform_modules/modules/api_lambda_integration"
-  api_gateway_name = local.api_gateway_name
-
-  # `api_gateway_stage_name`: Name of default stage required to  deploy changes to api. We don't generally need to change this.
-  # api_gateway_stage_name                   = "api"
-  # api_gateway_stage_description            = ""
-  #
-  # api_gateway_disable_execute_api_endpoint = false
-  # api_gateway_cors_configuration = {
-  #   allow_credentials = true
-  #   allow_headers     = ["Content-Type"]
-  #   allow_origins     = ["*"]
-  #   allow_methods     = ["GET", "POST"]
-  #   expose_headers    = ["Content-Type"]
-  #   max_age           = 6400
-  # }
-
-  stage_configuration = {
-    latest = {
-      api_gateway_stage_name        = "latest"
-      api_gateway_stage_description = "default stage"
+  aliases = {
+    dev = {
+      alias_name  = "dev"
+      description = "Development alias"
+    }
+    prd = {
+      alias_name  = "prd"
+      description = "Production alias"
     }
   }
 
-  lambda_integrations = {
-    latest = {
-      function_name   = module.lambda_function.function_name
-      integration_uri = module.lambda_function.function_invoke_arn
-      path            = "latest"
-
-      # alias_name_or_version = ""
-      # description           = ""
-      # request_parameters = {
-      #   "overwrite:header.Content-Type" = "application/json"
-      # }
-    }
-  }
-}
-
-
-module "api_domain_integration" {
-  source                   = "github.com/algebananazzzzz/terraform_modules/modules/api_domain_integration"
-  domain_name              = local.domain_name
-  regional_certificate_arn = local.regional_certificate_arn
-  route53_zone_id          = local.route53_zone_id
-  api_mappings = {
-    latest = {
-      api_id   = module.api_lambda_integration.api_gateway_id
-      stage_id = module.api_lambda_integration.stage_ids["latest"]
-    }
-  }
 }

@@ -1,10 +1,9 @@
 resource "aws_apigatewayv2_stage" "stage" {
-  for_each    = var.stage_configuration
   api_id      = aws_apigatewayv2_api.api_gateway.id
-  name        = each.value.api_gateway_stage_name
+  name        = var.stage_name
   auto_deploy = true
 
-  description = each.value.api_gateway_stage_description
+  description = var.stage_description
   #   access_log_settings {
   #     destination_arn = aws_cloudwatch_log_group.api_gw.arn
 

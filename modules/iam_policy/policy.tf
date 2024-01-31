@@ -1,9 +1,9 @@
-data "aws_iam_policy_document" "policy" {
-  policy_id = var.policy_document_id
-  version   = var.policy_document_version
+data "aws_iam_document" "policy" {
+  id      = var.document_id
+  version = var.document_version
 
   dynamic "statement" {
-    for_each = var.policy_document_statements
+    for_each = var.document_statements
 
     content {
       sid       = statement.key
@@ -25,11 +25,9 @@ data "aws_iam_policy_document" "policy" {
 }
 
 resource "aws_iam_policy" "policy" {
-  name        = var.policy_name
-  name_prefix = var.policy_name_prefix
-  path        = var.policy_path
-  description = var.policy_description
-  tags        = var.policy_tags
+  name        = var.name
+  description = var.description
+  tags        = var.tags
 
-  policy = data.aws_iam_policy_document.policy.json
+  policy = data.aws_iam_document.policy.json
 }

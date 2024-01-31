@@ -42,6 +42,7 @@ module "iam_role" {
           "values"           = ["arn:aws:logs:*:*"]
         }
       }
-    } }
+      }
+    }
   }
 }

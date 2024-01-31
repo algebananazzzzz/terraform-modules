@@ -9,43 +9,36 @@ variable "lambda_integrations" {
   }))
 }
 
-variable "stage_configuration" {
-  type = map(object({
-    api_gateway_stage_name        = string
-    api_gateway_stage_description = optional(string)
-  }))
+variable "stage_name" {
+  type    = string
+  default = "default"
 }
 
-variable "api_gateway_name" {
+variable "stage_description" {
+  type    = string
+  default = "Default stage managed by Terraform"
+}
+
+variable "name" {
   type = string
 }
 
-variable "api_gateway_stage_name" {
-  type    = string
-  default = "api"
-}
-
-variable "api_gateway_stage_description" {
-  type    = string
-  default = "Default stage"
-}
-
-variable "api_gateway_description" {
+variable "description" {
   type    = string
   default = "Api Gateway Lambda integration"
 }
 
-variable "api_gateway_disable_execute_api_endpoint" {
+variable "disable_execute_api_endpoint" {
   type    = bool
   default = null
 }
 
-variable "api_gateway_tags" {
+variable "tags" {
   type    = map(string)
   default = null
 }
 
-variable "api_gateway_cors_configuration" {
+variable "cors_configuration" {
   type = object({
     allow_credentials = optional(bool)
     allow_headers     = optional(list(string))

@@ -3,10 +3,14 @@ variable "aws_region" {
 }
 
 variable "profile" {
-  default = "default"
+  default = "algebananazzzzz"
 }
 
 variable "env" {
   type    = string
   default = "prd"
+}
+
+variable "project_code" {
+  default = "damnupzbot"
 }
