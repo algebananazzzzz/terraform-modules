@@ -1,6 +1,6 @@
-# Lambda upload zip files and dist/ dir
-upload/
-**/dist/
+# Locally generated wikis
+/wiki/generated/*
+!/wiki/generated/.gitkeep
 
 # Local .terraform directories
 **/.terraform/*
