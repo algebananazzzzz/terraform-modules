@@ -1,39 +1,132 @@
 variable "deployment_package" {
-  description = "Configuration for the deployment package. Accepts an object with `local_path` specified"
+  description = "Configuration for the deployment package. One of `filename, image_uri, s3_bucket` must be specified."
   type = object({
-    local_path        = optional(string)
+    filename          = optional(string)
+    source_code_hash  = optional(string)
+    image_uri         = optional(string)
     s3_bucket         = optional(string)
     s3_key            = optional(string)
     s3_object_version = optional(string)
-    s3_create_object_from_local = optional(object({
-      local_path = string
-    }))
   })
-}
 
-variable "execution_role_name" {
-  description = "Friendly name for the IAM execution role the lambda function will assume."
-  type        = string
+  validation {
+    condition = anytrue([
+      var.deployment_package.filename != null,
+      var.deployment_package.image_uri != null,
+      var.deployment_package.s3_bucket != null
+    ])
+
+    error_message = "One of `filename, image_uri, s3_bucket` must be specified"
+  }
+
+  validation {
+    condition = anytrue([
+      var.deployment_package.s3_bucket == null,
+      var.deployment_package.s3_key != null
+    ])
+
+    error_message = "`s3_key` must be specified when `s3_bucket` is set"
+  }
+
+  validation {
+    condition = anytrue([
+      var.deployment_package.source_code_hash == null,
+      var.deployment_package.filename != null
+    ])
+    error_message = "`source_code_hash` can only be specified when `filename` is set"
+  }
+
+  validation {
+    condition = anytrue([
+      var.deployment_package.s3_key == null,
+      var.deployment_package.s3_bucket != null
+    ])
+
+    error_message = "`s3_key` can only be specified when `s3_bucket` is set"
+  }
+
+  validation {
+    condition = anytrue([
+      var.deployment_package.s3_object_version == null,
+      var.deployment_package.s3_bucket != null
+    ])
+
+    error_message = "`s3_object_version` can only be specified when `s3_bucket` is set"
+  }
+
+  validation {
+    condition = anytrue([
+      alltrue([
+        var.deployment_package.filename != null,
+        var.deployment_package.image_uri == null,
+        var.deployment_package.s3_bucket == null
+      ]),
+      alltrue([
+        var.deployment_package.filename == null,
+        var.deployment_package.image_uri != null,
+        var.deployment_package.s3_bucket == null
+      ]),
+      alltrue([
+        var.deployment_package.filename == null,
+        var.deployment_package.image_uri == null,
+        var.deployment_package.s3_bucket != null
+      ])
+    ])
+    error_message = "Only one of `filename, s3_bucket, image_uri` can be specified."
+  }
 }
 
 variable "function_name" {
-  description = "Unique name for your Lambda Function"
+  description = "Unique name for your Lambda Function. Must follow naming convention."
+  type        = string
+
+  validation {
+    condition     = can(regex("^(wogaa|sentiments|snowplow|common|inspect)-(ci|qe|stg|prd)(ez|iz|mz|dz)(web|app|db|it|gut|na)-(.*)$", var.function_name))
+    error_message = "Function name does not follow naming convention. Please refer to Confluence page for more details."
+  }
+}
+
+variable "execution_role_arn" {
+  description = "Arn of the IAM execution role for the Lambda function."
   type        = string
 }
 
+variable "ignore_deployment_package_changes" {
+  description = "Boolean controlling whether lifecycle should ignore changes to deployment package (local files/s3/image uri)."
+  type        = bool
+  default     = false
+}
+
+variable "image_config" {
+  description = "Container image configuration values that override the values in the container image Dockerfile."
+  type = object({
+    command           = optional(list(string))
+    entry_point       = optional(list(string))
+    working_directory = optional(string)
+  })
+  default = null
+}
+
 variable "aliases" {
-  description = "Configuration for aliases to be created for the function. Takes a map of object specifying `alias_name` and `description` (optional)."
-  type = map(object({
-    alias_name  = string
-    description = optional(string)
-  }))
-  default = {}
+  description = "List of names of aliases to be created for the function."
+  type        = list(string)
+  default     = []
+}
+
+variable "vpc_config" {
+  description = "Configuration specifying a list of security groups and subnets in the VPC."
+  type = object({
+    subnet_ids                  = list(string)
+    security_group_ids          = list(string)
+    ipv6_allowed_for_dual_stack = optional(bool)
+  })
+  default = null
 }
 
 variable "architectures" {
-  description = "Instruction set architecture for your Lambda function. Valid values are [x86_64] and [arm64]"
+  description = "Instruction set architecture for your Lambda function. Valid values are [\"x86_64\"] and [\"arm64\"]."
   type        = list(string)
-  default     = null
+  default     = ["x86_64"]
 }
 
 variable "description" {
@@ -43,53 +136,27 @@ variable "description" {
 }
 
 variable "environment_variables" {
-  description = "Map of environment variables that are accessible from the function code during execution"
+  description = "Map of environment variables that are accessible from the function code during execution. At least one key must be present."
   type        = map(string)
   default     = null
 }
 
 variable "ephemeral_storage_size" {
-  description = "The size of the Lambda function Ephemeral storage (/tmp) represented in MB."
+  description = "The size of the Lambda function Ephemeral storage (/tmp) represented in MB. Maximum supported value of 10240."
   type        = number
   default     = 512
 }
 
-variable "execution_role_policy_document" {
-  description = "Configuration for a custom policiy to be associated with the execution role. Takes `name`, `description`, `version` and `statements`."
-  type = object({
-    name        = optional(string)
-    description = optional(string)
-    version     = optional(string)
-    statements = map(object({
-      effect    = string
-      actions   = list(string)
-      resources = optional(list(string))
-      conditions = optional(map(object({
-        context_variable = string
-        values           = list(string)
-      })))
-    }))
-    tags = optional(map(string))
-  })
-  default = null
-}
-
 variable "handler" {
-  description = "Function entrypoint in your code"
+  description = "Function entrypoint in your code. Required if the deployment package type is `filename` or `s3`"
   type        = string
   default     = null
 }
 
 variable "layers" {
-  description = "List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function"
+  description = "List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function."
   type        = list(string)
-  default     = null
-}
-
-variable "logs_retention_in_days" {
-  description = "Number of days you want to retain log events in the Lambda log group."
-  type        = number
-  default     = 30
+  default     = []
 }
 
 variable "memory_size" {
@@ -99,35 +166,29 @@ variable "memory_size" {
 }
 
 variable "reserved_concurrent_executions" {
-  description = "Amount of reserved concurrent executions for this lambda function. A value of 0 disables lambda from being triggered and -1 removes any concurrency limitations"
+  description = "Amount of reserved concurrent executions. Value of 0 disables lambda from being triggered and -1 removes any concurrency limitations."
   type        = number
   default     = -1
 }
 
 variable "runtime" {
-  description = "Identifier of the function's runtime"
+  description = "Identifier of the function's runtime. Required if the deployment package type is `filename` or `s3`"
   type        = string
   default     = null
 }
 
-variable "tags" {
-  description = "Map of tags to assign to the Lambda function."
-  type        = map(string)
-  default     = null
-}
-
 variable "timeout" {
-  description = "Amount of time your Lambda Function has to run in seconds."
+  description = "Amount of time your Lambda Function can run in seconds before returning a TaskTimeout error."
   type        = number
   default     = 3
 }
 
-variable "vpc_config" {
-  description = "VPC Configuration for the Lambda function. Takes `subnet_ids`, `security_group_ids` and `ipv6_allowed_for_dual_stack`"
-  type = object({
-    subnet_ids                  = list(string)
-    security_group_ids          = list(string)
-    ipv6_allowed_for_dual_stack = optional(bool)
-  })
-  default = null
+variable "logs_retention_in_days" {
+  description = "Specifies the number of days you want to retain log events in the Lambda log group."
+  type        = number
+  default     = 30
+}
+
+variable "tags" {
+  description = "Map of tags to assign to the Lambda function."
 }

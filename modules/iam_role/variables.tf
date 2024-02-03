@@ -1,56 +1,48 @@
 variable "name" {
-  type = string
-}
-
-variable "managed_policy_arns" {
-  type        = list(string)
-  description = "Set of exclusive IAM managed policy ARNs to attach to the IAM role"
-  default     = []
-}
-
-variable "description" {
+  description = "Friendly name for the IAM role"
   type        = string
-  description = "Description of the role"
-  default     = null
 }
 
-variable "max_session_duration" {
-  type        = number
-  description = "Maximum session duration (in seconds) that you want to set for the specified role"
-  default     = null
-}
-
-variable "permissions_boundary" {
-  type        = string
-  description = "ARN of the policy that is used to set the permissions boundary for the role"
-  default     = null
-}
-
-variable "tags" {
-  type    = map(string)
-  default = null
-}
-
-variable "assume_role_policy" {
-  type = map(list(string))
-}
-
-variable "policy_document" {
+variable "custom_policy" {
+  description = "Configuration for creating a new custom policy to be attached to the role."
   type = object({
-    name        = optional(string)
+    name        = string
     description = optional(string)
-    id          = optional(string)
-    version     = optional(string)
     statements = map(object({
       effect    = string
       actions   = list(string)
-      resources = optional(list(string))
-      conditions = optional(map(object({
-        context_variable = string
-        values           = list(string)
+      resources = list(string)
+      conditions = optional(list(object({
+        condition_operator = string
+        condition_key      = string
+        condition_value    = string
       })))
     }))
     tags = optional(map(string))
   })
   default = null
+}
+
+variable "assume_role_allowed_principals" {
+  description = "Allowed principals for an assume role policy to assume the role. Defaults to a Lambda Service example."
+  type = list(object({
+    type        = string
+    identifiers = list(string)
+  }))
+  default = [{
+    type        = "Service"
+    identifiers = ["lambda.amazonaws.com"]
+  }]
+}
+
+variable "additional_policy_attachments" {
+  description = "List of Arns for policies to be attached to the role. The policies must be managed outside this module."
+  type        = list(string)
+  default     = []
+}
+
+variable "tags" {
+  description = "Map of tags to assign to the role and custom policy."
+  type        = map(string)
+  default     = {}
 }

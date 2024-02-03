@@ -1,7 +1,0 @@
-output:
-  file: "../../wiki/generated/api_domain_integration.md"
-  mode: replace
-  template: |-
-    # Module: api_domain_integration 
-
-    {{ .Content }}

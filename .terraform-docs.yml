@@ -11,23 +11,13 @@ sections:
     - outputs
 
 output:
-  file: "../markdown.md"
+  file: "README.md"
   mode: append
 
 sort:
   enabled: true
   by: required
+
 settings:
-  #   anchor: true
   color: true
-  #   default: true
-  #   description: false
-  #   escape: true
   hide-empty: true
-#   html: true
-#   indent: 2
-#   lockfile: true
-#   read-comments: true
-#   required: true
-#   sensitive: true
-#   type: true

@@ -1,5 +1,4 @@
 data "aws_iam_document" "policy" {
-  id      = var.document_id
   version = var.document_version
 
   dynamic "statement" {
@@ -12,12 +11,11 @@ data "aws_iam_document" "policy" {
       resources = statement.value.resources
 
       dynamic "condition" {
-        for_each = statement.value.conditions != null ? statement.value.conditions : {}
-
+        for_each = statement.value.conditions != null ? statement.value.conditions : []
         content {
-          test     = condition.key
-          variable = condition.value["context_variable"]
-          values   = condition.value["values"]
+          test     = condition.value.condition_operator
+          variable = condition.value.condition_key
+          values   = condition.value.condition_value
         }
       }
     }

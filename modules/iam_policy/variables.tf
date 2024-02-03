@@ -10,12 +10,6 @@ variable "description" {
   default     = null
 }
 
-variable "document_id" {
-  type        = string
-  description = "ID for the policy document"
-  default     = null
-}
-
 variable "document_version" {
   type        = string
   description = "IAM policy document version"
@@ -27,10 +21,11 @@ variable "document_statements" {
   type = map(object({
     effect    = string
     actions   = list(string)
-    resources = optional(list(string))
-    conditions = optional(map(object({
-      context_variable = string
-      values           = list(string)
+    resources = list(string)
+    conditions = optional(list(object({
+      condition_operator = string
+      condition_key      = string
+      condition_value    = string
     })))
   }))
 }

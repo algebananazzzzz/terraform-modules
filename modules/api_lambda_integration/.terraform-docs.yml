@@ -1,7 +1,0 @@
-output:
-  file: "../../wiki/generated/api_lambda_integration.md"
-  mode: replace
-  template: |-
-    <!-- BEGIN_TF_DOCS -->
-    {{ .Content }}
-    <!-- END_TF_DOCS -->
