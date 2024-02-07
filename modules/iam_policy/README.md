@@ -1,3 +1,35 @@
+# IAM Policy Module
+
+## Full Configuration Example 
+```hcl
+module "policy" {
+  source = "./modules/iam_policy"
+  name = "mgmt-na-iampolicy-example"
+
+  # Optional variables with examples
+  description = ""
+  version = "2012-10-17"
+  document_statements = {
+    networkInterfacePermissions = {
+        effect = "Allow"
+        actions = [
+          "ec2:CreateNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+        ]
+        resources = ["*"]
+        conditions = [
+            {
+                condition_operator = "ArnLike"
+                condition_key = "aws:SourceArn"
+                condition_value = "arn:aws:cloudtrail:*:111122223333:trail/*"
+            }
+        ]
+      }
+    }
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Resources
 

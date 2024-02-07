@@ -1,3 +1,58 @@
+# IAM Role Module
+
+## Basic Example 
+```hcl 
+module "lambda_execution_role" {
+  source = "./modules/iam_role"
+  name = "mgmt-na-iamrole-example"
+
+  # Optional variables with examples
+  custom_policy = {
+    name = "iam-policy-wogaa-prdmzna-custompolicy"
+    statements = {
+      networkInterfacePermissions = {
+        effect = "Allow"
+        actions = [
+          "ec2:CreateNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+        ]
+        resources = ["*"]
+      }
+    }
+  }
+}
+```
+
+## Full Configuration Example 
+```hcl
+module "lambda_execution_role" {
+  source = "./modules/iam_role"
+  name = "mgmt-na-iamrole-example"
+
+  # Optional variables with examples
+  policy_attachments = ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"]
+  assume_role_allowed_principals = [{
+    type        = "Service"
+    identifiers = ["lambda.amazonaws.com"]
+  }]
+  custom_policy = {
+    name = "iam-policy-wogaa-prdmzna-custompolicy"
+    statements = {
+      networkInterfacePermissions = {
+        effect = "Allow"
+        actions = [
+          "ec2:CreateNetworkInterface",
+          "ec2:AttachNetworkInterface",
+          "ec2:DescribeNetworkInterfaces",
+        ]
+        resources = ["*"]
+      }
+    }
+  }
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Resources
 

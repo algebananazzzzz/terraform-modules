@@ -35,7 +35,7 @@ variable "assume_role_allowed_principals" {
   }]
 }
 
-variable "additional_policy_attachments" {
+variable "policy_attachments" {
   description = "List of Arns for policies to be attached to the role. The policies must be managed outside this module."
   type        = list(string)
   default     = []

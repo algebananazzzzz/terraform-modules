@@ -1,3 +1,40 @@
+# Apigw module
+
+## Basic Example
+```hcl
+module "api" {
+  source = "./modules/apigw"
+  name   = "dev-web-apigw-example"
+}
+```
+
+## Full Configuration Example 
+```hcl
+module "api" {
+  source = "./modules/apigw"
+  name   = "dev-web-apigw-example"
+
+  # Optional variables for default stage
+  default_stage_auto_deploy = true
+  default_stage_description = ""
+
+  # Optional variables with examples
+  api_key_selection_expression = "$request.header.x-api-key"
+  cors_configuration = {
+    allow_credentials = true
+    allow_headers     = ["*"]
+    allow_origins     = ["*"]
+    allow_methods     = ["POST", "GET"]
+    expose_headers    = ["*"]
+    max_age           = 3600
+  }
+  description                  = ""
+  disable_execute_api_endpoint = false
+  route_selection_expression   = "$request.method $request.path"
+  protocol_type                = "HTTP"
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Resources
 

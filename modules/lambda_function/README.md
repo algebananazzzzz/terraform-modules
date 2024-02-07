@@ -1,3 +1,81 @@
+# Lambda Function Module
+
+## Basic Example 
+```hcl 
+module "lambda_function" {
+  source             = "./modules/lambda-function"
+  function_name      = "dev-app-lambdafn-example"
+  execution_role_arn = "arn:aws:role:us-east-1:123456789012:my-role"
+  
+  # Example deployment package using local files
+  deployment_package = {
+    filename         = data.archive_file.zip_file.output_path
+    source_code_hash = data.archive_file.zip_file.output_base64sha256
+  }
+}
+
+data "archive_file" "zip_file" {
+  type        = "zip"
+  source_dir  = local.deployment_package_location
+  output_path = "${path.root}/upload/${local.function_name}.zip"
+}
+```
+
+## Full Configuration Example 
+```hcl
+module "lambda_function" {
+  source             = "./modules/lambda-function"
+  function_name      = "dev-app-lambdafn-example"
+  env                = "prd"
+  execution_role_arn = "arn:aws:role:us-east-1:123456789012:my-role"
+
+  # Example deployment package using local files
+  deployment_package = {
+    filename         = data.archive_file.zip_file.output_path
+    source_code_hash = data.archive_file.zip_file.output_base64sha256
+  }
+  
+  # Example deployment package using an existing image in aws ecr
+  # deployment_package = {
+  #  image_uri = "aws_account_id.dkr.ecr.us-west-2.amazonaws.com/repo:tag"
+  # }
+
+  # Example deployment package using a zip file in an s3 location
+  # deployment_package = {
+  #  s3_bucket         = "my-bucket"
+  #  s3_key            = "deployment.zip"
+  #  s3_object_version = "2"
+  # }
+
+  # Optional variables with examples
+  aliases       = ["dev", "prd"]
+  architectures = ["x86_64"]
+  description   = "Some description"
+  environment_variables = {
+    foo = "bar"
+  }
+  ephemeral_storage_size = 512
+  handler                           = "bootstrap"
+  ignore_deployment_package_changes = false
+  image_config = {
+    command           = ["--argument"]
+    entry_point       = ["/go/bin/app"]
+    working_directory = "/go/src/app"
+  }
+  layers                         = ["arn:aws:lambda:us-east-1:123456789012:layer:my-layer"]
+  logs_retention_in_days         = 30
+  memory_size                    = 128
+  reserved_concurrent_executions = -1
+  runtime                        = "provided.al2023"
+  timeout                        = 3
+  vpc_config = {
+    subnet_ids                  = ["subnet-123456789", "subnet-234567891"]
+    security_group_ids          = ["sg-123456789", "sg-234567891"]
+    ipv6_allowed_for_dual_stack = false
+  }
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Resources
 

@@ -1,3 +1,24 @@
+# Apigw Domain Integration module
+
+## Full Configuration Example
+```hcl
+module "domain_integration" {
+  source                   = "./modules/apigw-domain-integration"
+  apigw_api_id             = module.api.apigw.id
+  apigw_stage_id           = module.api.default_stage.id
+  domain_name              = "test.example.com"
+  regional_certificate_arn = "arn:aws:acm:region:account:certificate/certificate_ID"
+  zone_id                  = "Z123456789"
+
+  # Optional variables
+  ownership_verification_certificate_arn = ""
+  mutual_tls_authentication = {
+    truststore_uri     = ""
+    truststore_version = ""
+  }
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Resources
 

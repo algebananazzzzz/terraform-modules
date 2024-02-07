@@ -1,3 +1,21 @@
+# Apigw Domain Integration module
+
+## Full Configuration Example
+```hcl
+module "lambda_integration" {
+  source                    = "./modules/apigw-lambda-integration"
+  api_gateway_id            = module.apigw.api.id
+  api_gateway_execution_arn = module.apigw.api.execution_arn
+  function_name             = module.lambda_function.function.function_name
+  function_invoke_arn       = module.lambda_function.function.invoke_arn
+
+  # Optional variables with examples
+  function_alias_or_version = "dev"
+  integration_description   = ""
+  integration_path          = "api"
+}
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Resources
 
