@@ -54,6 +54,12 @@ module "lambda_execution_role" {
 ```
 
 <!-- BEGIN_TF_DOCS -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
+
 ## Resources
 
 | Name | Type |
@@ -68,9 +74,9 @@ module "lambda_execution_role" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_name"></a> [name](#input\_name) | Friendly name for the IAM role | `string` | n/a | yes |
-| <a name="input_additional_policy_attachments"></a> [additional\_policy\_attachments](#input\_additional\_policy\_attachments) | List of Arns for policies to be attached to the role. The policies must be managed outside this module. | `list(string)` | `[]` | no |
 | <a name="input_assume_role_allowed_principals"></a> [assume\_role\_allowed\_principals](#input\_assume\_role\_allowed\_principals) | Allowed principals for an assume role policy to assume the role. Defaults to a Lambda Service example. | <pre>list(object({<br>    type        = string<br>    identifiers = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "identifiers": [<br>      "lambda.amazonaws.com"<br>    ],<br>    "type": "Service"<br>  }<br>]</pre> | no |
 | <a name="input_custom_policy"></a> [custom\_policy](#input\_custom\_policy) | Configuration for creating a new custom policy to be attached to the role. | <pre>object({<br>    name        = string<br>    description = optional(string)<br>    statements = map(object({<br>      effect    = string<br>      actions   = list(string)<br>      resources = list(string)<br>      conditions = optional(list(object({<br>        condition_operator = string<br>        condition_key      = string<br>        condition_value    = string<br>      })))<br>    }))<br>    tags = optional(map(string))<br>  })</pre> | `null` | no |
+| <a name="input_policy_attachments"></a> [policy\_attachments](#input\_policy\_attachments) | List of Arns for policies to be attached to the role. The policies must be managed outside this module. | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to assign to the role and custom policy. | `map(string)` | `{}` | no |
 
 ## Outputs

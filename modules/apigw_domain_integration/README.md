@@ -20,6 +20,12 @@ module "domain_integration" {
 ```
 
 <!-- BEGIN_TF_DOCS -->
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
+
 ## Resources
 
 | Name | Type |
