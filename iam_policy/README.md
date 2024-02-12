@@ -1,7 +1,7 @@
 # IAM Policy Module
 
 ## Full Configuration Example 
-```hcl
+```terraform
 module "policy" {
   source = "github.com/algebananazzzzz/terraform-modules/iam_policy"
   name = "mgmt-na-iampolicy-example"

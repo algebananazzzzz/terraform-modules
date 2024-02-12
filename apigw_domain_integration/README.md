@@ -1,7 +1,7 @@
 # Apigw Domain Integration module
 
 ## Full Configuration Example
-```hcl
+```terraform
 module "domain_integration" {
   source                   = "github.com/algebananazzzzz/terraform-modules/apigw-domain-integration"
   apigw_api_id             = module.api.apigw.id

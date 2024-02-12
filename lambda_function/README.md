@@ -1,7 +1,7 @@
 # Lambda Function Module
 
 ## Basic Example 
-```hcl 
+```terraform 
 module "lambda_function" {
   source             = "github.com/algebananazzzzz/terraform-modules/lambda-function"
   function_name      = "dev-app-lambdafn-example"
@@ -22,7 +22,7 @@ data "archive_file" "zip_file" {
 ```
 
 ## Full Configuration Example 
-```hcl
+```terraform
 module "lambda_function" {
   source             = "github.com/algebananazzzzz/terraform-modules/lambda-function"
   function_name      = "dev-app-lambdafn-example"

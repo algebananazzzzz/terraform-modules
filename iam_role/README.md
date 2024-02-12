@@ -1,7 +1,7 @@
 # IAM Role Module
 
 ## Basic Example 
-```hcl 
+```terraform 
 module "lambda_execution_role" {
   source = "github.com/algebananazzzzz/terraform-modules/iam_role"
   name = "mgmt-na-iamrole-example"
@@ -25,7 +25,7 @@ module "lambda_execution_role" {
 ```
 
 ## Full Configuration Example 
-```hcl
+```terraform
 module "lambda_execution_role" {
   source = "github.com/algebananazzzzz/terraform-modules/iam_role"
   name = "mgmt-na-iamrole-example"

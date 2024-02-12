@@ -1,7 +1,7 @@
 # Apigw Domain Integration module
 
 ## Full Configuration Example
-```hcl
+```terraform
 module "lambda_integration" {
   source                    = "github.com/algebananazzzzz/terraform-modules/apigw-lambda-integration"
   api_gateway_id            = module.apigw.api.id

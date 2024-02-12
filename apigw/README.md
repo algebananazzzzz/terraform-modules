@@ -1,7 +1,7 @@
 # Apigw module
 
 ## Basic Example
-```hcl
+```terraform
 module "api" {
   source = "github.com/algebananazzzzz/terraform-modules/apigw"
   name   = "dev-web-apigw-example"
@@ -9,7 +9,7 @@ module "api" {
 ```
 
 ## Full Configuration Example 
-```hcl
+```terraform
 module "api" {
   source = "github.com/algebananazzzzz/terraform-modules/apigw"
   name   = "dev-web-apigw-example"
