@@ -1,11 +1,15 @@
+
 output "api_mapping" {
-  value = aws_apigatewayv2_api_mapping.mapping
+  description = "An object representing the created default `aws_apigatewayv2_api_mapping` resource."
+  value       = aws_apigatewayv2_api_mapping.mapping
 }
 
-output "apigw_domain_name" {
-  value = aws_apigatewayv2_domain_name.domain
+output "api_domain_name" {
+  description = "An object representing the created default `aws_apigatewayv2_domain_name` resource."
+  value       = aws_apigatewayv2_domain_name.domain
 }
 
-output "route53_record" {
-  value = aws_route53_record.record
+output "record" {
+  description = "An object representing the created `aws_route53_record` resource."
+  value       = aws_route53_record.record
 }

@@ -1,5 +1,9 @@
-data "aws_iam_policy_document" "custom_policy" {
-  count = var.custom_policy != null ? 1 : 0
+locals {
+  create_custom_policy = local.create_custom_policy
+}
+
+data "aws_iam_policy_document" "custom" {
+  count = local.create_custom_policy ? 1 : 0
 
   dynamic "statement" {
     for_each = var.custom_policy.statements
@@ -21,20 +25,20 @@ data "aws_iam_policy_document" "custom_policy" {
   }
 }
 
-resource "aws_iam_policy" "custom_policy" {
-  count       = var.custom_policy != null ? 1 : 0
+resource "aws_iam_policy" "custom" {
+  count       = local.create_custom_policy ? 1 : 0
   name        = var.custom_policy.name
   description = var.custom_policy.description
 
-  policy = data.aws_iam_policy_document.custom_policy[0].json
+  policy = data.aws_iam_policy_document.custom[0].json
 
   tags = merge({
     Name = var.custom_policy.name
   }, var.tags)
 }
 
-resource "aws_iam_role_policy_attachment" "custom_policy" {
-  count      = var.custom_policy != null ? 1 : 0
+resource "aws_iam_role_policy_attachment" "custom" {
+  count      = local.create_custom_policy ? 1 : 0
   role       = aws_iam_role.role.name
-  policy_arn = aws_iam_policy.custom_policy[0].arn
+  policy_arn = aws_iam_policy.custom[0].arn
 }

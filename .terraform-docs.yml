@@ -7,7 +7,6 @@ recursive:
 sections:
   show:
     - requirements
-    - providers
     - resources
     - inputs
     - outputs
