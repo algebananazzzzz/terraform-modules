@@ -84,12 +84,6 @@ module "lambda_function" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
@@ -127,7 +121,7 @@ module "lambda_function" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cloudwatch_log_group"></a> [cloudwatch\_log\_group](#output\_cloudwatch\_log\_group) | n/a |
-| <a name="output_function"></a> [function](#output\_function) | n/a |
-| <a name="output_function_aliases"></a> [function\_aliases](#output\_function\_aliases) | n/a |
+| <a name="output_function"></a> [function](#output\_function) | Object representing the created `aws_lambda_function` resource. |
+| <a name="output_function_aliases"></a> [function\_aliases](#output\_function\_aliases) | Map of object representing the created `aws_lambda_alias` resources. |
+| <a name="output_log_group"></a> [log\_group](#output\_log\_group) | Object representing the created `aws_cloudwatch_log_group` resource. |
 <!-- END_TF_DOCS -->

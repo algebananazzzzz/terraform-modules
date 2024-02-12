@@ -43,12 +43,6 @@ module "api" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
@@ -75,5 +69,6 @@ module "api" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_apigw"></a> [apigw](#output\_apigw) | n/a |
+| <a name="output_api"></a> [api](#output\_api) | An object representing the created `aws_apigatewayv2_api` resource. |
+| <a name="output_stage"></a> [stage](#output\_stage) | An object representing the created default `aws_apigatewayv2_stage` resource. |
 <!-- END_TF_DOCS -->

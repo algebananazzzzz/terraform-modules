@@ -24,12 +24,6 @@ module "lambda_integration" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
@@ -54,7 +48,7 @@ module "lambda_integration" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_api_integration"></a> [api\_integration](#output\_api\_integration) | n/a |
-| <a name="output_api_route"></a> [api\_route](#output\_api\_route) | n/a |
-| <a name="output_lambda_permission"></a> [lambda\_permission](#output\_lambda\_permission) | n/a |
+| <a name="output_integration"></a> [integration](#output\_integration) | An object representing the created `aws_apigatewayv2_integration` resource. |
+| <a name="output_lambda_permission"></a> [lambda\_permission](#output\_lambda\_permission) | An object representing the created `aws_lambda_permission` resource. |
+| <a name="output_route"></a> [route](#output\_route) | An object representing the created `aws_apigatewayv2_route` resource. |
 <!-- END_TF_DOCS -->

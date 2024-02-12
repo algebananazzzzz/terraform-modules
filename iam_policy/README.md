@@ -38,12 +38,6 @@ module "policy" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
@@ -64,8 +58,8 @@ module "policy" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_arn"></a> [arn](#output\_arn) | n/a |
-| <a name="output_id"></a> [id](#output\_id) | n/a |
-| <a name="output_json"></a> [json](#output\_json) | n/a |
-| <a name="output_name"></a> [name](#output\_name) | n/a |
+| <a name="output_arn"></a> [arn](#output\_arn) | String representing the `arn` of the created `aws_iam_policy` resource. |
+| <a name="output_id"></a> [id](#output\_id) | String representing the `id` of the created `aws_iam_policy` resource. |
+| <a name="output_json"></a> [json](#output\_json) | String representing the `json` document of the policy specified for the created `aws_iam_policy` resource. |
+| <a name="output_name"></a> [name](#output\_name) | String representing the `name` of the created `aws_iam_policy` resource. |
 <!-- END_TF_DOCS -->

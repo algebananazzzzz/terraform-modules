@@ -27,12 +27,6 @@ module "domain_integration" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
@@ -58,7 +52,7 @@ module "domain_integration" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_api_mapping"></a> [api\_mapping](#output\_api\_mapping) | n/a |
-| <a name="output_apigw_domain_name"></a> [apigw\_domain\_name](#output\_apigw\_domain\_name) | n/a |
-| <a name="output_route53_record"></a> [route53\_record](#output\_route53\_record) | n/a |
+| <a name="output_api_domain_name"></a> [api\_domain\_name](#output\_api\_domain\_name) | An object representing the created default `aws_apigatewayv2_domain_name` resource. |
+| <a name="output_api_mapping"></a> [api\_mapping](#output\_api\_mapping) | An object representing the created default `aws_apigatewayv2_api_mapping` resource. |
+| <a name="output_record"></a> [record](#output\_record) | An object representing the created `aws_route53_record` resource. |
 <!-- END_TF_DOCS -->

@@ -84,12 +84,6 @@ module "cloudfront_s3" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
@@ -127,4 +121,14 @@ module "cloudfront_s3" {
 | <a name="input_origin_bucket_versioning_status"></a> [origin\_bucket\_versioning\_status](#input\_origin\_bucket\_versioning\_status) | Versioning state of the origin bucket. Valid values: `Enabled`, `Suspended`, or `Disabled`. | `string` | `"Disabled"` | no |
 | <a name="input_route53_create_records"></a> [route53\_create\_records](#input\_route53\_create\_records) | Boolean on whether to create route53 record(s) (simple alias record) for the cloudfront alias(es). | `bool` | `false` | no |
 | <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | The ID of the hosted zone to contain this record. | `string` | `null` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_bucket_permission"></a> [bucket\_permission](#output\_bucket\_permission) | An object representing the created `aws_s3_bucket_policy` resource. Returns null if `create_bucket_policy` is set to false. |
+| <a name="output_distribution"></a> [distribution](#output\_distribution) | An object representing the created `aws_cloudfront_distribution` resource. |
+| <a name="output_new_bucket"></a> [new\_bucket](#output\_new\_bucket) | An object representing the created `aws_lambda_permission` resource. Returns null if `origin_bucket_use_existing` is set. |
+| <a name="output_origin_access_control"></a> [origin\_access\_control](#output\_origin\_access\_control) | An object representing the created `aws_cloudfront_origin_access_control` resource. |
+| <a name="output_records"></a> [records](#output\_records) | A list of objects representing the list of created `aws_route53_record` resources. |
 <!-- END_TF_DOCS -->

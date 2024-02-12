@@ -61,19 +61,13 @@ module "lambda_execution_role" {
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
-## Providers
-
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.57.0 |
-
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aws_iam_policy.custom_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.custom](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_role.role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
-| [aws_iam_role_policy_attachment.custom_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.custom](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.policy_attachments](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 
 ## Inputs
@@ -90,6 +84,7 @@ module "lambda_execution_role" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_created_custom_policy"></a> [created\_custom\_policy](#output\_created\_custom\_policy) | n/a |
-| <a name="output_role"></a> [role](#output\_role) | n/a |
+| <a name="output_custom_policy"></a> [custom\_policy](#output\_custom\_policy) | Object representing the created custom `aws_iam_policy` resource. Returns null if `custom_policy` is not set. |
+| <a name="output_json"></a> [json](#output\_json) | String representing the `json` document of the policy specified for the created custom `aws_iam_policy` resource. Returns null if `custom_policy` is not set. |
+| <a name="output_role"></a> [role](#output\_role) | Object representing the created `aws_iam_role` resource. |
 <!-- END_TF_DOCS -->
