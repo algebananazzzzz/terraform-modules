@@ -3,7 +3,7 @@
 ## Basic Example 
 ```hcl 
 module "lambda_execution_role" {
-  source = "./modules/iam_role"
+  source = "github.com/algebananazzzzz/terraform-modules/iam_role"
   name = "mgmt-na-iamrole-example"
 
   # Optional variables with examples
@@ -27,7 +27,7 @@ module "lambda_execution_role" {
 ## Full Configuration Example 
 ```hcl
 module "lambda_execution_role" {
-  source = "./modules/iam_role"
+  source = "github.com/algebananazzzzz/terraform-modules/iam_role"
   name = "mgmt-na-iamrole-example"
 
   # Optional variables with examples

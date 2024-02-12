@@ -3,7 +3,7 @@
 ## Full Configuration Example
 ```hcl
 module "domain_integration" {
-  source                   = "./modules/apigw-domain-integration"
+  source                   = "github.com/algebananazzzzz/terraform-modules/apigw-domain-integration"
   apigw_api_id             = module.api.apigw.id
   apigw_stage_id           = module.api.default_stage.id
   domain_name              = "test.example.com"

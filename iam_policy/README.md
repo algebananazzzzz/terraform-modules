@@ -3,7 +3,7 @@
 ## Full Configuration Example 
 ```hcl
 module "policy" {
-  source = "./modules/iam_policy"
+  source = "github.com/algebananazzzzz/terraform-modules/iam_policy"
   name = "mgmt-na-iampolicy-example"
 
   # Optional variables with examples

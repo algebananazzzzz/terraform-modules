@@ -3,7 +3,7 @@
 ## Full Configuration Example
 ```hcl
 module "lambda_integration" {
-  source                    = "./modules/apigw-lambda-integration"
+  source                    = "github.com/algebananazzzzz/terraform-modules/apigw-lambda-integration"
   api_gateway_id            = module.apigw.api.id
   api_gateway_execution_arn = module.apigw.api.execution_arn
   function_name             = module.lambda_function.function.function_name

@@ -5,14 +5,14 @@ Provisions a Cloudfront Distribution with an S3 bucket origin
 ## Basic Example
 ```hcl
 module "cloudfront_s3" {
-  source = "./modules/cloudfront_s3_origin"
+  source = "github.com/algebananazzzzz/terraform-modules/cloudfront_s3_origin"
 }
 ```
 
 ## Full Configuration Example
 ```hcl
 module "cloudfront_s3" {
-  source = "./modules/cloudfront_s3_origin"
+  source = "github.com/algebananazzzzz/terraform-modules/cloudfront_s3_origin"
 
   # Optional Origin Access Control Variables
   origin_access_control_name             = "S3Origin"

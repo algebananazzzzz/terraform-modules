@@ -3,7 +3,7 @@
 ## Basic Example 
 ```hcl 
 module "lambda_function" {
-  source             = "./modules/lambda-function"
+  source             = "github.com/algebananazzzzz/terraform-modules/lambda-function"
   function_name      = "dev-app-lambdafn-example"
   execution_role_arn = "arn:aws:role:us-east-1:123456789012:my-role"
   
@@ -24,7 +24,7 @@ data "archive_file" "zip_file" {
 ## Full Configuration Example 
 ```hcl
 module "lambda_function" {
-  source             = "./modules/lambda-function"
+  source             = "github.com/algebananazzzzz/terraform-modules/lambda-function"
   function_name      = "dev-app-lambdafn-example"
   env                = "prd"
   execution_role_arn = "arn:aws:role:us-east-1:123456789012:my-role"

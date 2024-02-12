@@ -2,10 +2,11 @@ formatter: "markdown"
 
 recursive:
   enabled: true
-  path: modules
+  path: "./"
 
 sections:
   show:
+    - requirements
     - providers
     - resources
     - inputs

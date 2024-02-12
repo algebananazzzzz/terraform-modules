@@ -3,7 +3,7 @@
 ## Basic Example
 ```hcl
 module "api" {
-  source = "./modules/apigw"
+  source = "github.com/algebananazzzzz/terraform-modules/apigw"
   name   = "dev-web-apigw-example"
 }
 ```
@@ -11,7 +11,7 @@ module "api" {
 ## Full Configuration Example 
 ```hcl
 module "api" {
-  source = "./modules/apigw"
+  source = "github.com/algebananazzzzz/terraform-modules/apigw"
   name   = "dev-web-apigw-example"
 
   # Optional variables for default stage
