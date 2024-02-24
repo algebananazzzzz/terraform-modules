@@ -24,7 +24,7 @@ module "domain_integration" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.2 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.57.0 |
 
 ## Resources
