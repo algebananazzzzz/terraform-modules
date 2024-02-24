@@ -38,7 +38,7 @@ module "lambda_integration" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_api_gateway_execution_arn"></a> [api\_gateway\_execution\_arn](#input\_api\_gateway\_execution\_arn) | Execution arn of the API. | `string` | n/a | yes |
 | <a name="input_api_gateway_id"></a> [api\_gateway\_id](#input\_api\_gateway\_id) | Identifier for the API. | `string` | n/a | yes |
-| <a name="input_function_integration_uri"></a> [function\_integration\_uri](#input\_function\_integration\_uri) | URI of the Lambda function for the Lambda proxy integration. | `string` | n/a | yes |
+| <a name="input_function_invoke_arn"></a> [function\_invoke\_arn](#input\_function\_invoke\_arn) | URI of the Lambda function for the Lambda proxy integration. | `string` | n/a | yes |
 | <a name="input_function_name"></a> [function\_name](#input\_function\_name) | Name of the Lambda function. | `string` | n/a | yes |
 | <a name="input_function_alias_or_version"></a> [function\_alias\_or\_version](#input\_function\_alias\_or\_version) | Query parameter to specify function version or alias name. | `string` | `null` | no |
 | <a name="input_integration_description"></a> [integration\_description](#input\_integration\_description) | Description of the Lambda integration. | `string` | `null` | no |
