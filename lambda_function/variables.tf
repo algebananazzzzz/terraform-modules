@@ -191,4 +191,5 @@ variable "logs_retention_in_days" {
 
 variable "tags" {
   description = "Map of tags to assign to the Lambda function."
+  default = null
 }
