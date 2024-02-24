@@ -9,7 +9,7 @@ variable "function_alias_or_version" {
   default     = null
 }
 
-variable "function_integration_uri" {
+variable "function_invoke_arn" {
   description = "URI of the Lambda function for the Lambda proxy integration."
   type        = string
 }

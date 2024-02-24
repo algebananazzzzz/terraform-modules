@@ -3,7 +3,7 @@ resource "aws_apigatewayv2_integration" "api_integration" {
   description = var.integration_description
 
   integration_method = "POST"
-  integration_uri    = var.function_integration_uri
+  integration_uri    = var.function_invoke_arn
   integration_type   = "AWS_PROXY"
 }
 
