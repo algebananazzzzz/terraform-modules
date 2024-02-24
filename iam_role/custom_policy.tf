@@ -1,5 +1,5 @@
 locals {
-  create_custom_policy = local.create_custom_policy
+  create_custom_policy = var.custom_policy != null
 }
 
 data "aws_iam_policy_document" "custom" {

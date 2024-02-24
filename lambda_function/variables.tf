@@ -79,11 +79,6 @@ variable "deployment_package" {
 variable "function_name" {
   description = "Unique name for your Lambda Function. Must follow naming convention."
   type        = string
-
-  validation {
-    condition     = can(regex("^(wogaa|sentiments|snowplow|common|inspect)-(ci|qe|stg|prd)(ez|iz|mz|dz)(web|app|db|it|gut|na)-(.*)$", var.function_name))
-    error_message = "Function name does not follow naming convention. Please refer to Confluence page for more details."
-  }
 }
 
 variable "execution_role_arn" {
