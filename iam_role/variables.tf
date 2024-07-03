@@ -15,7 +15,7 @@ variable "custom_policy" {
       conditions = optional(list(object({
         condition_operator = string
         condition_key      = string
-        condition_value    = string
+        condition_values   = list(string)
       })))
     }))
     tags = optional(map(string))

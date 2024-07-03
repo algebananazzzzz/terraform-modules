@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "custom" {
         content {
           test     = condition.value.condition_operator
           variable = condition.value.condition_key
-          values   = condition.value.condition_value
+          values   = condition.value.condition_values
         }
       }
     }
