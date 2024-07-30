@@ -1,5 +1,7 @@
 # Apigw module
 
+Creates a simple HTTP Api Gateway with a default stage.
+
 ## Basic Example
 ```terraform
 module "api" {
