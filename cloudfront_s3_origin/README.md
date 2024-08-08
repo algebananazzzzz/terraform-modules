@@ -128,6 +128,7 @@ module "cloudfront_s3" {
 |------|-------------|
 | <a name="output_bucket_permission"></a> [bucket\_permission](#output\_bucket\_permission) | An object representing the created `aws_s3_bucket_policy` resource. Returns null if `create_bucket_policy` is set to false. |
 | <a name="output_distribution"></a> [distribution](#output\_distribution) | An object representing the created `aws_cloudfront_distribution` resource. |
+| <a name="output_domain_name"></a> [domain\_name](#output\_domain\_name) | n/a |
 | <a name="output_new_bucket"></a> [new\_bucket](#output\_new\_bucket) | An object representing the created `aws_lambda_permission` resource. Returns null if `origin_bucket_use_existing` is set. |
 | <a name="output_origin_access_control"></a> [origin\_access\_control](#output\_origin\_access\_control) | An object representing the created `aws_cloudfront_origin_access_control` resource. |
 | <a name="output_records"></a> [records](#output\_records) | A list of objects representing the list of created `aws_route53_record` resources. |
