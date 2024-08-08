@@ -3,6 +3,10 @@ output "distribution" {
   value       = aws_cloudfront_distribution.this
 }
 
+output "domain_name" {
+  value = var.cloudfront_aliases != null ? aws_route53_record.aliases[0] : aws_cloudfront_distribution.this.domain_name
+}
+
 output "origin_access_control" {
   description = "An object representing the created `aws_cloudfront_origin_access_control` resource."
   value       = aws_cloudfront_origin_access_control.origin_access_control
