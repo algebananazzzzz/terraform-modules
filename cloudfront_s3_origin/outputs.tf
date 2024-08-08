@@ -4,7 +4,7 @@ output "distribution" {
 }
 
 output "domain_name" {
-  value = var.cloudfront_aliases != null ? aws_route53_record.aliases[0] : aws_cloudfront_distribution.this.domain_name
+  value = var.cloudfront_aliases != null ? var.cloudfront_aliases[0] : aws_cloudfront_distribution.this.domain_name
 }
 
 output "origin_access_control" {
