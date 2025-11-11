@@ -1,7 +1,8 @@
 name: Generate terraform docs
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - main
 
 jobs:
   docs:
@@ -20,3 +21,23 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "👻 (Module READMEs): Automated Terraform Documentation"
+
+  create-semantic-tag:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: anothrNick/github-tag-action@v1
+        env:
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: main
+          WITH_V: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo "New tag ${{ steps.tag_version.outputs.new_tag }}"
